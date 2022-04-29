@@ -1,0 +1,19 @@
+.header {
+    align-items: center;
+    display: flex;
+    padding: 0 1.5rem;
+    justify-content: space-between;
+    box-shadow: 0 1.5px 7px 1px rgba(71, 175, 201, 0.48);
+    margin-bottom: 1.5rem;
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+}
+
+.header-userName {
+    margin: 0 1.6rem;
+    color: #377c8d;
+    font-weight: 500;
+}

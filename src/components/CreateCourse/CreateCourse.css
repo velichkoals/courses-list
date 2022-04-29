@@ -1,0 +1,98 @@
+.create-course {
+    border-radius: 3px;
+    color: #706f6f;
+    padding: 1rem 3rem;
+    width: 100%;
+}
+
+.create__section-wrapper {
+    margin: 1rem 0;
+}
+
+.create__section {
+    display: flex;
+    justify-content: space-between;
+    margin: .5rem 0;
+}
+
+.label-text {
+    font-size: .8rem;
+    font-weight: 500;
+    margin: .1rem;
+}
+
+.create__btn {
+    margin-top: .5rem;
+    align-self: center;
+}
+
+.create__textarea {
+    border-radius: 3px;
+    border: 2px solid rgba(71, 175, 201, 0.56);
+    color: #706f6f;
+    resize: none;
+    padding: .5rem;
+    font-size: .85rem;
+    font-weight: 500;
+    width: 95%;
+    height: 5rem;
+}
+
+.create__textarea::placeholder {
+    color: rgba(112, 111, 111, 0.71);
+}
+.create__textarea:focus {
+    outline: none;
+    border: 2px solid #47afc9;
+}
+
+.main-section {
+    border-radius: 3px;
+    box-shadow: 0 0 5px 1px rgba(71, 147, 201, 0.3);
+    padding: 2rem;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.create__column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.create__item {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0 3rem 0;
+}
+
+.item__title {
+    align-self: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.item__duration {
+    display: block;
+    font-size: 1.5rem;
+}
+
+.item__duration-time {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.create__item-authors {
+    align-items: center;
+}
+
+.authors-list__name {
+    margin-right: 4rem;
+}
+
+.authors-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
