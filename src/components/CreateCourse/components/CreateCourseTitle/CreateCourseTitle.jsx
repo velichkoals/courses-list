@@ -3,7 +3,7 @@ import { Input } from '../../../../common/Input/Input';
 
 export const CreateCourseTitle = (props) => {
 	return (
-		<div className='create__input-wrapper'>
+		<div className='title'>
 			<div className='label-text'>
 				<label htmlFor='title'>Title</label>
 			</div>
