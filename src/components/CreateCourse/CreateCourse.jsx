@@ -18,12 +18,6 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 	const [authorName, setAuthorName] = useState('');
 	const [newAuthors, setNewAuthors] = useState([]);
 
-	// useEffect(() => {
-	// 	if (authors.length > 4) {
-	// 		setAuthors(authors);
-	// 	}
-	// }, [authors]);
-
 	const validateForm = (e) => {
 		e.preventDefault();
 
