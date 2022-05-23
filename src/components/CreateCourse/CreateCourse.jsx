@@ -1,37 +1,32 @@
 import React, { useState } from 'react';
 import { Button } from '../../common/Button/Button';
-import { minToHours } from '../Courses/components/CourseCard/CourseCard';
+import { minToHours } from '../../heplers/minToHours';
+import { correctDate } from '../../heplers/correctDate';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateCourseTitle } from './components/CreateCourseTitle/CreateCourseTitle';
 import { CreateCourseDescription } from './components/CreateCourseDescription/CreateCourseDescription';
 import { CreateCourseDuration } from './components/CreateCourseDuration/CreateCourseDuration';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AuthorsList } from './components/AuthorsList/AuthorsList';
-import mockedCoursesList from '../../constants';
 
 import './CreateCourse.css';
 
-const correctDate = () => {
-	let today = new Date();
-	const yyyy = today.getFullYear();
-	let mm = today.getMonth() + 1;
-	let dd = today.getDate();
-	today = dd + '/' + mm + '/' + yyyy;
-
-	return today;
-};
-
-export const CreateCourse = (props) => {
-	const { addNewCourse } = props;
-
+export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState(0);
 	const [authorName, setAuthorName] = useState('');
-	const [authors, setAuthors] = useState(mockedCoursesList[0]);
 	const [newAuthors, setNewAuthors] = useState([]);
 
-	const validateForm = () => {
+	// useEffect(() => {
+	// 	if (authors.length > 4) {
+	// 		setAuthors(authors);
+	// 	}
+	// }, [authors]);
+
+	const validateForm = (e) => {
+		e.preventDefault();
+
 		let isValidDuration = true;
 		let isValidTitle = false;
 		let isValidDescription = false;
@@ -41,10 +36,16 @@ export const CreateCourse = (props) => {
 			alert('Duration should be more than 0 minute!');
 			isValidDuration = false;
 		}
-		if (title.length !== 0) {
+		if (title.trim().length < 2) {
+			alert('Title should be at least 2 characters!');
+		}
+		if (description.trim().length < 2) {
+			alert('Description should be at least 2 characters!');
+		}
+		if (title.trim().length >= 2) {
 			isValidTitle = true;
 		}
-		if (description.length !== 0) {
+		if (description.trim().length >= 2) {
 			isValidDescription = true;
 		}
 		if (newAuthors.length !== 0) {
@@ -74,33 +75,35 @@ export const CreateCourse = (props) => {
 			setDuration(0);
 			setAuthorName('');
 			setNewAuthors([]);
-			setAuthors(mockedCoursesList[0]);
 		} else {
 			alert('Please, fill in all fields');
 		}
 	};
 
 	const addAuthor = (data) => {
-		authors.forEach((elem) => {
+		authors.map((elem) => {
 			if (elem === data) {
 				setNewAuthors([...newAuthors, elem]);
 				const correctAuthorsList = authors.filter((e) => data !== e);
 				setAuthors(correctAuthorsList);
 			}
+			return authors;
 		});
 	};
+
 	const removeAuthor = (data) => {
-		newAuthors.forEach((elem) => {
+		newAuthors.map((elem) => {
 			if (elem === data) {
 				setAuthors([...authors, elem]);
 				const correctAuthorsList = newAuthors.filter((e) => data !== e);
 				setNewAuthors(correctAuthorsList);
 			}
+			return newAuthors;
 		});
 	};
 
 	const addAuthorToList = () => {
-		if (authorName.length >= 2) {
+		if (authorName.trim().length >= 2) {
 			const newAuthor = {
 				id: uuidv4(),
 				name: authorName,
@@ -116,7 +119,7 @@ export const CreateCourse = (props) => {
 	const buttonCreateAuthor = 'Create author';
 
 	return (
-		<div className='create-course'>
+		<form onSubmit={validateForm} className='create-course'>
 			<div className='create__section-wrapper'>
 				<div className='create__section'>
 					<CreateCourseTitle
@@ -124,7 +127,7 @@ export const CreateCourse = (props) => {
 						onChange={(e) => setTitle(e.target.value)}
 					/>
 					<div className='create__btn'>
-						<Button onClick={validateForm} text={buttonCreate} />
+						<Button type='submit' text={buttonCreate} />
 					</div>
 				</div>
 				<CreateCourseDescription
@@ -141,12 +144,22 @@ export const CreateCourse = (props) => {
 							onChange={(e) => setAuthorName(e.target.value)}
 						/>
 						<div className='create__btn'>
-							<Button onClick={addAuthorToList} text={buttonCreateAuthor} />
+							<Button
+								onClick={addAuthorToList}
+								type='button'
+								text={buttonCreateAuthor}
+							/>
 						</div>
 					</div>
 					<CreateCourseDuration
 						value={duration}
 						onChange={(e) => setDuration(e.target.value)}
+						min='0'
+						onInput={(e) => {
+							if (e.target.value === '') {
+								e.target.value = '';
+							}
+						}}
 					/>
 					<div className='create__item item__duration'>
 						Duration:{' '}
@@ -157,10 +170,10 @@ export const CreateCourse = (props) => {
 				<AuthorsList
 					authors={authors}
 					newAuthors={newAuthors}
-					addAuthor={(elem) => addAuthor(elem)}
-					removeAuthor={(elem) => removeAuthor(elem)}
+					addAuthor={addAuthor}
+					removeAuthor={removeAuthor}
 				/>
 			</div>
-		</div>
+		</form>
 	);
 };

@@ -12,7 +12,11 @@ export const AuthorsList = (props) => {
 					{authors.map((elem, index) => (
 						<div key={index} className='authors-list__item'>
 							<div className='authors-list__name'>{elem.name}</div>
-							<Button onClick={() => addAuthor(elem)} text='Add author' />
+							<Button
+								onClick={() => addAuthor(elem)}
+								type='button'
+								text='Add author'
+							/>
 						</div>
 					))}
 				</div>
@@ -26,6 +30,7 @@ export const AuthorsList = (props) => {
 								<div className='authors-list__name'>{elem.name}</div>
 								<Button
 									onClick={() => removeAuthor(elem)}
+									type='button'
 									text={deleteAuthor}
 								/>
 							</div>

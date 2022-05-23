@@ -15,21 +15,22 @@ export const SearchBar = (props) => {
 		}
 	};
 
-	const handleClick = () => {
+	const onSubmit = (e) => {
+		e.preventDefault();
 		handleSearch(searchValue);
 	};
 
 	const buttonText = 'Search';
 	return (
-		<div className='searchBar'>
+		<form onSubmit={onSubmit} className='searchBar'>
 			<Input
 				value={searchValue}
 				onChange={handleChange}
 				placeholder='Enter course name'
 			/>
 			<div className='searchbar__btn'>
-				<Button onClick={handleClick} text={buttonText} />
+				<Button type='submit' text={buttonText} />
 			</div>
-		</div>
+		</form>
 	);
 };

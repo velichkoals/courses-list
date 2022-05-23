@@ -53,4 +53,6 @@ const mockedAuthorsList = [
 		name: 'Valentina Larina',
 	},
 ];
-export default [mockedAuthorsList, mockedCoursesList];
+
+const exportData = [mockedAuthorsList, mockedCoursesList];
+export default exportData;
