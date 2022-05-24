@@ -1,15 +1,7 @@
 import React from 'react';
 import { Button } from '../../../../common/Button/Button';
-
+import { minToHours } from '../../../../heplers/minToHours';
 import './CourseCard.css';
-
-export const minToHours = (min) => {
-	let hours = Math.floor(min / 60);
-	let minutes = min % 60;
-	hours = hours < 10 ? '0' + hours : hours;
-	minutes = minutes < 10 ? '0' + minutes : minutes;
-	return `${hours}:${minutes}`;
-};
 
 export const CourseCard = (props) => {
 	const { info, authors } = props;
@@ -24,12 +16,14 @@ export const CourseCard = (props) => {
 	const duration = minToHours(info.duration);
 
 	let authorsList = [];
-	info.authors.forEach((elem) => {
-		authors.forEach((e) => {
+	info.authors.map((elem) => {
+		authors.map((e) => {
 			if (elem === e.id) {
 				authorsList.push(e.name);
 			}
+			return authors;
 		});
+		return info;
 	});
 	authorsList = authorsList.join(', ');
 

@@ -12,6 +12,29 @@ export const Courses = () => {
 	const [authorsList, setAuthorsList] = useState(mockedCoursesList[0]);
 	const [searchResults, setSearchResults] = useState([]);
 	const [addCourse, setAddCourse] = useState(false);
+	const [authors, setAuthors] = useState(mockedCoursesList[0]);
+	const [updateAuthors, setUpdateAuthors] = useState(false);
+	const [addedAuthors, setAddedAuthors] = useState([]);
+
+	useEffect(() => {
+		const arr = [];
+		mockedCoursesList[0].map((elem) => {
+			arr.push(elem.name);
+			return arr;
+		});
+		authors.map((elem) => {
+			if (!arr.includes(elem.name) && !addedAuthors.includes(elem)) {
+				setAddedAuthors([...addedAuthors, elem]);
+			}
+			return arr;
+		});
+
+		if (updateAuthors) {
+			setAuthors([...mockedCoursesList[0], ...addedAuthors]);
+		}
+
+		setUpdateAuthors(false);
+	}, [authors, updateAuthors]);
 
 	useEffect(() => {
 		setSearchResults(data);
@@ -19,13 +42,14 @@ export const Courses = () => {
 
 	const handleSearch = (searchQuery) => {
 		let res = [];
-		data.forEach((elem) => {
+		data.map((elem) => {
 			if (
 				elem.title.toUpperCase().includes(searchQuery.toUpperCase()) ||
 				searchQuery.toUpperCase() === elem.id.toUpperCase()
 			) {
 				res.push(elem);
 			}
+			return data;
 		});
 		setSearchResults(res);
 	};
@@ -35,11 +59,13 @@ export const Courses = () => {
 	};
 
 	const addNewCourse = (info, authors) => {
+		setUpdateAuthors(true);
 		let newAuthors = [];
-		authors.forEach((elem) => {
+		authors.map((elem) => {
 			if (!authorsList.includes(elem)) {
 				newAuthors.push(elem);
 			}
+			return authors;
 		});
 		setAuthorsList([...authorsList, ...newAuthors]);
 		setAddCourse(false);
@@ -52,7 +78,11 @@ export const Courses = () => {
 		<div className='courses'>
 			{addCourse ? (
 				<div className='courses-add'>
-					<CreateCourse addNewCourse={addNewCourse} />
+					<CreateCourse
+						addNewCourse={addNewCourse}
+						authors={authors}
+						setAuthors={setAuthors}
+					/>
 				</div>
 			) : (
 				<div>
