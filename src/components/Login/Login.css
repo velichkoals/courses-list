@@ -5,6 +5,11 @@
     flex-direction: column;
     justify-content: center;
 }
+.login__item-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .login__item {
     margin: .3rem;
@@ -24,3 +29,14 @@
     font-weight: 500;
 }
 
+.login__error {
+    align-self: flex-end;
+    color: #bd2a2a;
+    margin-right: 1rem;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.login__error__email {
+    align-self: center;
+}

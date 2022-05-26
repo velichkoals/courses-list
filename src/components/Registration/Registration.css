@@ -6,8 +6,13 @@
     justify-content: center;
 }
 
+.registration__item-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .registration__item {
-    margin: .3rem;
+    margin-bottom: .5rem;
     width: 300px;
 }
 
@@ -24,3 +29,13 @@
     font-weight: 500;
 }
 
+.registration__error {
+    align-self: flex-end;
+    color: #bd2a2a;
+    margin-right: 1rem;
+    font-size: .8rem;
+    font-weight: 600;
+}
+.registration__error__email {
+    align-self: center;
+}
