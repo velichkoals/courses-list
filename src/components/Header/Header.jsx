@@ -1,11 +1,11 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from './components/Logo/Logo';
 import { Button } from '../../common/Button/Button';
 
 import './Header.css';
-import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+export const Header = () => {
 	const navigate = useNavigate();
 
 	const logoutUser = () => {
@@ -18,7 +18,9 @@ const Header = () => {
 	return (
 		<div className='header'>
 			<div className='header-item'>
-				<Logo />
+				<Link to='/courses'>
+					<Logo />
+				</Link>
 			</div>
 			<div className='header-item'>
 				<div className='header-userName'>
@@ -29,5 +31,3 @@ const Header = () => {
 		</div>
 	);
 };
-
-export default Header;

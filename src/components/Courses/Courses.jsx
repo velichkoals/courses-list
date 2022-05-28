@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
@@ -7,14 +8,27 @@ import mockedCoursesList from '../../constants';
 
 import './Courses.css';
 
-export const Courses = () => {
-	const [data, setData] = useState(mockedCoursesList[1]);
-	const [authorsList, setAuthorsList] = useState(mockedCoursesList[0]);
-	const [searchResults, setSearchResults] = useState([]);
+export const Courses = ({
+	searchResults,
+	setSearchResults,
+	add,
+	data,
+	setData,
+	authors,
+	setAuthors,
+	authorsList,
+	setAuthorsList,
+}) => {
+	const navigate = useNavigate();
 	const [addCourse, setAddCourse] = useState(false);
-	const [authors, setAuthors] = useState(mockedCoursesList[0]);
 	const [updateAuthors, setUpdateAuthors] = useState(false);
 	const [addedAuthors, setAddedAuthors] = useState([]);
+
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/login');
+		}
+	});
 
 	useEffect(() => {
 		const arr = [];
@@ -37,8 +51,15 @@ export const Courses = () => {
 	}, [authors, updateAuthors]);
 
 	useEffect(() => {
-		setSearchResults(data);
-	}, []);
+		if (add === false) {
+			setAddCourse(false);
+		}
+	}, [add]);
+
+	const handleClick = () => {
+		navigate('add');
+		setAddCourse(true);
+	};
 
 	const handleSearch = (searchQuery) => {
 		let res = [];
@@ -88,12 +109,17 @@ export const Courses = () => {
 				<div>
 					<div className='courses-section'>
 						<SearchBar handleSearch={handleSearch} handleClear={handleClear} />
-						<Button onClick={() => setAddCourse(true)} text={buttonText} />
+						<Button onClick={handleClick} text={buttonText} />
 					</div>
 					<div className='courses-list'>
 						{searchResults.map((elem, index) => {
 							return (
-								<CourseCard info={elem} authors={authorsList} key={index} />
+								<CourseCard
+									info={elem}
+									authors={authorsList}
+									key={index}
+									id={index + 1}
+								/>
 							);
 						})}
 					</div>

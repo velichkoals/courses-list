@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,12 +8,18 @@ import LoginPass from './components/LoginPass/LoginPass';
 
 import './Login.css';
 
-const Login = () => {
+export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isCorrectData, setIsCorrectData] = useState(false);
 	const navigate = useNavigate();
 	const formMethods = useForm({ mode: 'onBlur' });
+
+	useEffect(() => {
+		if (localStorage.getItem('token')) {
+			navigate('/courses');
+		}
+	});
 
 	const {
 		formState: { errors },
@@ -92,5 +98,3 @@ const Login = () => {
 		</FormProvider>
 	);
 };
-
-export default Login;

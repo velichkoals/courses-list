@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../common/Button/Button';
 import { minToHours } from '../../../../heplers/minToHours';
+
 import './CourseCard.css';
 
 export const CourseCard = (props) => {
+	const navigate = useNavigate();
 	const { info, authors } = props;
 
 	let correctDate = info.creationDate.replace(/(\d*).(\d*).(\d*)/, '$1.$2.$3');
@@ -27,6 +30,13 @@ export const CourseCard = (props) => {
 	});
 	authorsList = authorsList.join(', ');
 
+	const handleClick = () => {
+		navigate(`${props.id}`, {
+			state: { authorsList, duration, correctDate, ...props },
+		});
+	};
+
+	const buttonText = 'Show course';
 	return (
 		<div className='course-card'>
 			<div className='card__column card__column_first'>
@@ -47,7 +57,7 @@ export const CourseCard = (props) => {
 					{correctDate}
 				</div>
 				<div className='card__column__item card-button'>
-					<Button text='Show course' />
+					<Button text={buttonText} onClick={handleClick} />
 				</div>
 			</div>
 		</div>

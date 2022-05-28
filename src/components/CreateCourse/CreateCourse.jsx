@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../common/Button/Button';
 import { minToHours } from '../../heplers/minToHours';
 import { correctDate } from '../../heplers/correctDate';
@@ -17,6 +18,7 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 	const [duration, setDuration] = useState(0);
 	const [authorName, setAuthorName] = useState('');
 	const [newAuthors, setNewAuthors] = useState([]);
+	const navigate = useNavigate();
 
 	const validateForm = (e) => {
 		e.preventDefault();
@@ -69,6 +71,7 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 			setDuration(0);
 			setAuthorName('');
 			setNewAuthors([]);
+			navigate('/courses');
 		} else {
 			alert('Please, fill in all fields');
 		}
