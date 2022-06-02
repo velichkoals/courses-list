@@ -1,13 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../common/Button/Button';
 import { minToHours } from '../../../../heplers/minToHours';
+import { EditIcon } from './EditIcon/EditIcon';
+import { DeleteIcon } from './DeleteIcon/DeleteIcon';
+import { removeCourseAction } from '../../../../store/courses/actionCreators';
 
 import './CourseCard.css';
 
 export const CourseCard = (props) => {
 	const navigate = useNavigate();
 	const { info, authors } = props;
+
+	const dispatch = useDispatch();
+	const courses = useSelector((state) => state.courses.courses);
+	console.log(courses);
 
 	let correctDate = info.creationDate.replace(/(\d*).(\d*).(\d*)/, '$1.$2.$3');
 	const splitDate = correctDate.split('.');
@@ -30,10 +38,13 @@ export const CourseCard = (props) => {
 	});
 	authorsList = authorsList.join(', ');
 
-	const handleClick = () => {
+	const showCourse = () => {
 		navigate(`${props.id}`, {
 			state: { authorsList, duration, correctDate, ...props },
 		});
+	};
+	const removeCourse = () => {
+		dispatch(removeCourseAction(info.id));
 	};
 
 	const buttonText = 'Show course';
@@ -56,8 +67,14 @@ export const CourseCard = (props) => {
 					<span className='card-property__title'>Created:</span>
 					{correctDate}
 				</div>
-				<div className='card__column__item card-button'>
-					<Button text={buttonText} onClick={handleClick} />
+				<div className='card__column__item card-buttons'>
+					<Button text={buttonText} onClick={showCourse} />
+					<button className='edit-btn'>
+						<EditIcon />
+					</button>
+					<button className='delete-btn' onClick={removeCourse}>
+						<DeleteIcon />
+					</button>
 				</div>
 			</div>
 		</div>

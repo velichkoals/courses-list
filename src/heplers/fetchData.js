@@ -1,8 +1,8 @@
 const URL = 'http://localhost:4000';
 
-export async function fetchData(route, newUser) {
+export async function fetchData(method, route, newUser) {
 	return await fetch(`${URL}${route}`, {
-		method: 'POST',
+		method: method,
 		body: JSON.stringify(newUser),
 		headers: {
 			'Content-type': 'application/json',

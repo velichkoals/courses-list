@@ -11,7 +11,6 @@ import './App.css';
 
 function App() {
 	const [searchResults, setSearchResults] = useState(mockedCoursesList[1]);
-	const [data, setData] = useState(mockedCoursesList[1]);
 	const [authors, setAuthors] = useState(mockedCoursesList[0]);
 	const [authorsList, setAuthorsList] = useState(mockedCoursesList[0]);
 
@@ -29,8 +28,6 @@ function App() {
 							add={false}
 							searchResults={searchResults}
 							setSearchResults={setSearchResults}
-							data={data}
-							setData={setData}
 							authors={authors}
 							setAuthors={setAuthors}
 							authorsList={authorsList}
@@ -45,8 +42,6 @@ function App() {
 							add={true}
 							searchResults={searchResults}
 							setSearchResults={setSearchResults}
-							data={data}
-							setData={setData}
 							authors={authors}
 							setAuthors={setAuthors}
 							authorsList={authorsList}

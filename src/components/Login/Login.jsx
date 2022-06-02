@@ -34,7 +34,7 @@ export const Login = () => {
 			email,
 			password,
 		};
-		const loginInfo = await fetchData('/login', newUser);
+		const loginInfo = await fetchData('POST', '/login', newUser);
 
 		if (loginInfo.successful) {
 			navigate('/courses');
