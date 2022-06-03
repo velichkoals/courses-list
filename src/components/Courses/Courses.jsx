@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { addCourseAction } from '../../store/courses/actionCreators';
 import { useNavigate } from 'react-router-dom';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
-import { addCourseAction } from '../../store/courses/actionCreators';
-import mockedCoursesList from '../../constants';
 
 import './Courses.css';
 
-export const Courses = ({
-	searchResults,
-	setSearchResults,
-	add,
-	authors,
-	setAuthors,
-	authorsList,
-	setAuthorsList,
-}) => {
+export const Courses = ({ add, searchResults, setSearchResults }) => {
 	const navigate = useNavigate();
 	const [addCourse, setAddCourse] = useState(false);
-	const [updateAuthors, setUpdateAuthors] = useState(false);
-	const [addedAuthors, setAddedAuthors] = useState([]);
 
 	const dispatch = useDispatch();
 	const courses = useSelector((state) => state.courses.courses);
@@ -34,24 +23,8 @@ export const Courses = ({
 	});
 
 	useEffect(() => {
-		const arr = [];
-		courses.map((elem) => {
-			arr.push(elem.name);
-			return arr;
-		});
-		authors.map((elem) => {
-			if (!arr.includes(elem.name) && !addedAuthors.includes(elem)) {
-				setAddedAuthors([...addedAuthors, elem]);
-			}
-			return arr;
-		});
-
-		if (updateAuthors) {
-			setAuthors([...mockedCoursesList[0], ...addedAuthors]);
-		}
-
-		setUpdateAuthors(false);
-	}, [authors, updateAuthors]);
+		setSearchResults([...courses]);
+	}, [courses]);
 
 	useEffect(() => {
 		if (add === false) {
@@ -79,23 +52,12 @@ export const Courses = ({
 	};
 
 	const handleClear = () => {
-		// 	setSearchResults(data);
+		setSearchResults([...courses]);
 	};
 
-	const addNewCourse = (info, authors) => {
+	const addNewCourse = (info) => {
 		dispatch(addCourseAction(info));
-
-		setUpdateAuthors(true);
-		let newAuthors = [];
-		authors.map((elem) => {
-			if (!authorsList.includes(elem)) {
-				newAuthors.push(elem);
-			}
-			return authors;
-		});
-		setAuthorsList([...authorsList, ...newAuthors]);
 		setAddCourse(false);
-		setSearchResults([...searchResults, info]);
 	};
 
 	const buttonText = 'Add new course';
@@ -103,11 +65,7 @@ export const Courses = ({
 		<div className='courses'>
 			{addCourse ? (
 				<div className='courses-add'>
-					<CreateCourse
-						addNewCourse={addNewCourse}
-						authors={authors}
-						setAuthors={setAuthors}
-					/>
+					<CreateCourse addNewCourse={addNewCourse} />
 				</div>
 			) : (
 				<div>
@@ -116,15 +74,8 @@ export const Courses = ({
 						<Button onClick={handleClick} text={buttonText} />
 					</div>
 					<div className='courses-list'>
-						{courses.map((elem, index) => {
-							return (
-								<CourseCard
-									info={elem}
-									authors={authorsList}
-									key={index}
-									id={index + 1}
-								/>
-							);
+						{searchResults.map((elem, index) => {
+							return <CourseCard info={elem} key={index} id={index + 1} />;
 						})}
 					</div>
 				</div>

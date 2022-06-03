@@ -1,23 +1,22 @@
-import { fetchData } from '../../heplers/fetchData';
 import { ADD_COURSE, REMOVE_COURSE } from './actionTypes';
 
 const defaultState = {
 	courses: [],
 };
 
-async function getCourses() {
-	const coursesList = await fetchData('GET', '/courses/all');
+// - - - For Task 4 - - -
 
-	if (coursesList.successful) {
-		coursesList.result.map((course) => {
-			if (course.id !== '66cc289e-6de9-49b2-9ca7-8b4f409d6467') {
-				defaultState.courses.push(course);
-			}
-			return coursesList;
-		});
-	}
-}
-getCourses().then();
+// async function getCourses() {
+// 	const coursesList = await fetchData('GET', '/courses/all');
+//
+// 	if (coursesList.successful) {
+// 		coursesList.result.map((course) => {
+// 				defaultState.courses.push(course);
+// 			return coursesList;
+// 		});
+// 	}
+// }
+// getCourses().then();
 
 export const coursesReducer = (state = defaultState, action) => {
 	switch (action.type) {

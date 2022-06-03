@@ -1,0 +1,1 @@
+export const CREATE_AUTHOR = 'CREATE_AUTHOR';

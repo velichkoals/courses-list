@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAuthorAction } from '../../store/authors/actionCreators';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../common/Button/Button';
 import { minToHours } from '../../heplers/minToHours';
@@ -12,13 +14,21 @@ import { AuthorsList } from './components/AuthorsList/AuthorsList';
 
 import './CreateCourse.css';
 
-export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
+export const CreateCourse = ({ addNewCourse }) => {
+	const authors = useSelector((state) => state.authors.authors);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState(0);
 	const [authorName, setAuthorName] = useState('');
-	const [newAuthors, setNewAuthors] = useState([]);
-	const navigate = useNavigate();
+	const [authorsList, setAuthorsList] = useState([...authors]);
+	const [courseAuthors, setCourseAuthors] = useState([]);
+
+	useEffect(() => {
+		setAuthorsList([...authors]);
+	}, [authors]);
 
 	const validateForm = (e) => {
 		e.preventDefault();
@@ -44,7 +54,7 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 		if (description.trim().length >= 2) {
 			isValidDescription = true;
 		}
-		if (newAuthors.length !== 0) {
+		if (courseAuthors.length !== 0) {
 			isValidAuthors = true;
 		}
 
@@ -54,7 +64,7 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 			isValidDuration &&
 			isValidAuthors
 		) {
-			const authorsList = newAuthors.map((elem) => elem.id);
+			const authorsList = courseAuthors.map((elem) => elem.id);
 
 			const course = {
 				id: uuidv4(),
@@ -64,13 +74,13 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 				duration,
 				authors: authorsList,
 			};
-			addNewCourse(course, newAuthors);
+			addNewCourse(course, courseAuthors);
 
 			setTitle('');
 			setDescription('');
 			setDuration(0);
 			setAuthorName('');
-			setNewAuthors([]);
+			setCourseAuthors([]);
 			navigate('/courses');
 		} else {
 			alert('Please, fill in all fields');
@@ -78,24 +88,24 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 	};
 
 	const addAuthor = (data) => {
-		authors.map((elem) => {
+		authorsList.map((elem) => {
 			if (elem === data) {
-				setNewAuthors([...newAuthors, elem]);
-				const correctAuthorsList = authors.filter((e) => data !== e);
-				setAuthors(correctAuthorsList);
+				setCourseAuthors([...courseAuthors, elem]);
+				const correctAuthorsList = authorsList.filter((e) => data !== e);
+				setAuthorsList(correctAuthorsList);
 			}
 			return authors;
 		});
 	};
 
 	const removeAuthor = (data) => {
-		newAuthors.map((elem) => {
+		courseAuthors.map((elem) => {
 			if (elem === data) {
-				setAuthors([...authors, elem]);
-				const correctAuthorsList = newAuthors.filter((e) => data !== e);
-				setNewAuthors(correctAuthorsList);
+				setAuthorsList([...authorsList, elem]);
+				const correctAuthorsList = courseAuthors.filter((e) => data !== e);
+				setCourseAuthors(correctAuthorsList);
 			}
-			return newAuthors;
+			return courseAuthors;
 		});
 	};
 
@@ -105,7 +115,8 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 				id: uuidv4(),
 				name: authorName,
 			};
-			setAuthors([...authors, newAuthor]);
+			dispatch(createAuthorAction(newAuthor));
+			setCourseAuthors([]);
 			setAuthorName('');
 		} else {
 			alert('Author name should be at least 2 characters!');
@@ -165,9 +176,9 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 					</div>
 				</div>
 				<AuthorsList
-					authors={authors}
-					newAuthors={newAuthors}
 					addAuthor={addAuthor}
+					courseAuthors={courseAuthors}
+					authorsList={authorsList}
 					removeAuthor={removeAuthor}
 				/>
 			</div>

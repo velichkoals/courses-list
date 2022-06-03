@@ -5,14 +5,13 @@ import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
-import mockedCoursesList from './constants';
+import { useSelector } from 'react-redux';
 
 import './App.css';
 
 function App() {
-	const [searchResults, setSearchResults] = useState(mockedCoursesList[1]);
-	const [authors, setAuthors] = useState(mockedCoursesList[0]);
-	const [authorsList, setAuthorsList] = useState(mockedCoursesList[0]);
+	const courses = useSelector((state) => state.courses.courses);
+	const [searchResults, setSearchResults] = useState([...courses]);
 
 	return (
 		<BrowserRouter>
@@ -28,10 +27,6 @@ function App() {
 							add={false}
 							searchResults={searchResults}
 							setSearchResults={setSearchResults}
-							authors={authors}
-							setAuthors={setAuthors}
-							authorsList={authorsList}
-							setAuthorsList={setAuthorsList}
 						/>
 					}
 				/>
@@ -42,10 +37,6 @@ function App() {
 							add={true}
 							searchResults={searchResults}
 							setSearchResults={setSearchResults}
-							authors={authors}
-							setAuthors={setAuthors}
-							authorsList={authorsList}
-							setAuthorsList={setAuthorsList}
 						/>
 					}
 				/>
