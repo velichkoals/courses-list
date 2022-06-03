@@ -6,6 +6,7 @@ import { Button } from '../../../../common/Button/Button';
 import { minToHours } from '../../../../heplers/minToHours';
 import { EditIcon } from './EditIcon/EditIcon';
 import { DeleteIcon } from './DeleteIcon/DeleteIcon';
+import { getAuthors } from '../../../../store/selectors';
 
 import './CourseCard.css';
 
@@ -14,7 +15,7 @@ export const CourseCard = (props) => {
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const authors = useSelector((state) => state.authors.authors);
+	const authors = useSelector(getAuthors);
 
 	let correctDate = info.creationDate.replace(/(\d*).(\d*).(\d*)/, '$1.$2.$3');
 	const splitDate = correctDate.split('.');

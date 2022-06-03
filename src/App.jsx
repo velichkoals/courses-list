@@ -6,11 +6,12 @@ import { CourseInfo } from './components/CourseInfo/CourseInfo';
 import { Login } from './components/Login/Login';
 import { Registration } from './components/Registration/Registration';
 import { useSelector } from 'react-redux';
+import { getCourses } from './store/selectors';
 
 import './App.css';
 
 function App() {
-	const courses = useSelector((state) => state.courses.courses);
+	const courses = useSelector(getCourses);
 	const [searchResults, setSearchResults] = useState([...courses]);
 
 	return (

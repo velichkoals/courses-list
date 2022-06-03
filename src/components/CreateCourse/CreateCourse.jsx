@@ -11,11 +11,12 @@ import { CreateCourseDescription } from './components/CreateCourseDescription/Cr
 import { CreateCourseDuration } from './components/CreateCourseDuration/CreateCourseDuration';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AuthorsList } from './components/AuthorsList/AuthorsList';
+import { getAuthors } from '../../store/selectors';
 
 import './CreateCourse.css';
 
 export const CreateCourse = ({ addNewCourse }) => {
-	const authors = useSelector((state) => state.authors.authors);
+	const authors = useSelector(getAuthors);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 

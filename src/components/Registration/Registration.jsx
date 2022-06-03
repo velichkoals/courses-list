@@ -38,7 +38,7 @@ export const Registration = () => {
 			email,
 			password,
 		};
-		const registrationInfo = await fetchData('/register', newUser);
+		const registrationInfo = await fetchData('POST', '/register', newUser);
 
 		if (registrationInfo.successful) {
 			navigate('/login');

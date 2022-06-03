@@ -2,16 +2,29 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from './components/Logo/Logo';
 import { Button } from '../../common/Button/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../store/user/actionCreators';
+import { getUser } from '../../store/selectors';
 
 import './Header.css';
 
 export const Header = () => {
 	const navigate = useNavigate();
+	const user = useSelector(getUser);
+	const dispatch = useDispatch();
 
-	const logoutUser = () => {
+	const removeUser = () => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('username');
 		navigate('/login');
+
+		const userInfo = {
+			name: '',
+			token: '',
+			email: '',
+		};
+
+		dispatch(logoutUser(userInfo));
 	};
 
 	const buttonText = 'Logout';
@@ -23,10 +36,8 @@ export const Header = () => {
 				</Link>
 			</div>
 			<div className='header-item'>
-				<div className='header-userName'>
-					{localStorage.getItem('username')}
-				</div>
-				<Button text={buttonText} onClick={logoutUser} />
+				<div className='header-userName'>{user.name}</div>
+				<Button text={buttonText} onClick={removeUser} />
 			</div>
 		</div>
 	);

@@ -4,20 +4,6 @@ const defaultState = {
 	courses: [],
 };
 
-// - - - For Task 4 - - -
-
-// async function getCourses() {
-// 	const coursesList = await fetchData('GET', '/courses/all');
-//
-// 	if (coursesList.successful) {
-// 		coursesList.result.map((course) => {
-// 				defaultState.courses.push(course);
-// 			return coursesList;
-// 		});
-// 	}
-// }
-// getCourses().then();
-
 export const coursesReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case ADD_COURSE:

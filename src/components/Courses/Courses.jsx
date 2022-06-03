@@ -6,20 +6,29 @@ import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
+import { getCourses } from '../../store/selectors';
 
 import './Courses.css';
+import { loginUser } from '../../store/user/actionCreators';
 
 export const Courses = ({ add, searchResults, setSearchResults }) => {
 	const navigate = useNavigate();
 	const [addCourse, setAddCourse] = useState(false);
 
 	const dispatch = useDispatch();
-	const courses = useSelector((state) => state.courses.courses);
+	const courses = useSelector(getCourses);
 
 	useEffect(() => {
 		if (!localStorage.getItem('token')) {
 			navigate('/login');
 		}
+
+		const userInfo = {
+			name: localStorage.getItem('username'),
+			email: localStorage.getItem('email'),
+			token: localStorage.getItem('token'),
+		};
+		dispatch(loginUser(userInfo));
 	});
 
 	useEffect(() => {

@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { fetchData } from '../../heplers/fetchData';
 import LoginEmail from './components/LoginEmail/LoginEmail';
 import LoginPass from './components/LoginPass/LoginPass';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../store/user/actionCreators';
 
 import './Login.css';
 
@@ -12,6 +14,8 @@ export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [isCorrectData, setIsCorrectData] = useState(false);
+
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const formMethods = useForm({ mode: 'onBlur' });
 
@@ -41,6 +45,15 @@ export const Login = () => {
 			setIsCorrectData(false);
 			localStorage.setItem('token', loginInfo.result);
 			localStorage.setItem('username', loginInfo.user.name);
+			localStorage.setItem('email', loginInfo.user.email);
+
+			const userInfo = {
+				name: loginInfo.user.name,
+				token: loginInfo.result,
+				email: loginInfo.user.email,
+			};
+
+			dispatch(loginUser(userInfo));
 		}
 		if (loginInfo.successful === false && Object.keys(errors).length === 0) {
 			setIsCorrectData(true);
