@@ -7,9 +7,9 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { CreateCourse } from '../CreateCourse/CreateCourse';
 import { getCourses } from '../../store/selectors';
+import { loginUser } from '../../store/user/actionCreators';
 
 import './Courses.css';
-import { loginUser } from '../../store/user/actionCreators';
 
 export const Courses = ({ add, searchResults, setSearchResults }) => {
 	const navigate = useNavigate();

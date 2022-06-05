@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../common/Button/Button';
 import { Link } from 'react-router-dom';
-import { fetchData } from '../../heplers/fetchData';
+import { postData } from '../../heplers/postData';
 import RegistrationName from './components/RegistrationName/RegistrationName';
 import RegistrationEmail from './components/RegistrationEmail/RegistrationEmail';
 import RegistrationPass from './components/RegistrationPass/RegistrationPass';
@@ -38,7 +38,7 @@ export const Registration = () => {
 			email,
 			password,
 		};
-		const registrationInfo = await fetchData('POST', '/register', newUser);
+		const registrationInfo = await postData('/register', newUser);
 
 		if (registrationInfo.successful) {
 			navigate('/login');

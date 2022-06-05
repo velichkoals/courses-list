@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { fetchData } from '../../heplers/fetchData';
+import { postData } from '../../heplers/postData';
 import LoginEmail from './components/LoginEmail/LoginEmail';
 import LoginPass from './components/LoginPass/LoginPass';
 import { useDispatch } from 'react-redux';
@@ -38,7 +38,8 @@ export const Login = () => {
 			email,
 			password,
 		};
-		const loginInfo = await fetchData('POST', '/login', newUser);
+
+		const loginInfo = await postData('/login', newUser);
 
 		if (loginInfo.successful) {
 			navigate('/courses');
