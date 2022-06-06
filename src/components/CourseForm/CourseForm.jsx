@@ -6,14 +6,14 @@ import { Button } from '../../common/Button/Button';
 import { minToHours } from '../../heplers/minToHours';
 import { correctDate } from '../../heplers/correctDate';
 import { v4 as uuidv4 } from 'uuid';
-import { CreateCourseTitle } from './components/CreateCourseTitle/CreateCourseTitle';
-import { CreateCourseDescription } from './components/CreateCourseDescription/CreateCourseDescription';
-import { CreateCourseDuration } from './components/CreateCourseDuration/CreateCourseDuration';
+import { CreateCourseTitle } from './components/CourseFormTitle/CreateCourseTitle';
+import { CreateCourseDescription } from './components/CourseFormDescription/CreateCourseDescription';
+import { CreateCourseDuration } from './components/CourseFormDuration/CreateCourseDuration';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AuthorsList } from './components/AuthorsList/AuthorsList';
 import { getAuthors } from '../../store/selectors';
 
-import './CreateCourse.css';
+import './CourseForm.css';
 
 export const CreateCourse = ({ addNewCourse }) => {
 	const authors = useSelector(getAuthors);

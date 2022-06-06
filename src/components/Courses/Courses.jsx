@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { CreateCourse } from '../CreateCourse/CreateCourse';
+import { CreateCourse } from '../CourseForm/CourseForm';
 import { getCourses } from '../../store/selectors';
 import { loginUser } from '../../store/user/actionCreators';
 

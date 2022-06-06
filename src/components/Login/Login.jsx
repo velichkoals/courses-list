@@ -34,12 +34,16 @@ export const Login = () => {
 	async function onSubmit() {
 		reset();
 
+		let userRole = '';
 		const newUser = {
 			email,
 			password,
 		};
-
 		const loginInfo = await postData('/login', newUser);
+
+		if (email.trim() === 'admin@email.com' && password.trim() === 'admin123') {
+			userRole = 'ADMIN';
+		}
 
 		if (loginInfo.successful) {
 			navigate('/courses');
@@ -47,11 +51,13 @@ export const Login = () => {
 			localStorage.setItem('token', loginInfo.result);
 			localStorage.setItem('username', loginInfo.user.name);
 			localStorage.setItem('email', loginInfo.user.email);
+			localStorage.setItem('role', userRole);
 
 			const userInfo = {
 				name: loginInfo.user.name,
 				token: loginInfo.result,
 				email: loginInfo.user.email,
+				role: userRole,
 			};
 
 			dispatch(loginUser(userInfo));

@@ -6,6 +6,7 @@ const defaultState = {
 		name: '',
 		email: '',
 		token: '',
+		role: '',
 	},
 };
 
@@ -19,6 +20,7 @@ export const userReducer = (state = defaultState, action) => {
 					name: action.payload.name,
 					token: action.payload.token,
 					email: action.payload.email,
+					role: action.payload.role,
 				},
 			};
 
@@ -30,6 +32,7 @@ export const userReducer = (state = defaultState, action) => {
 					name: action.payload.name,
 					token: action.payload.token,
 					email: action.payload.email,
+					role: action.payload.role,
 				},
 			};
 

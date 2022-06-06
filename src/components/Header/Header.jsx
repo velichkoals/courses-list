@@ -22,6 +22,7 @@ export const Header = () => {
 			name: '',
 			token: '',
 			email: '',
+			role: '',
 		};
 
 		dispatch(logoutUser(userInfo));
