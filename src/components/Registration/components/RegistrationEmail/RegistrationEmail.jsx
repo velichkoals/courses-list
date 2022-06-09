@@ -3,8 +3,7 @@ import { FormInput } from '../../../../common/FormInput/FormInput';
 
 import '../../Registration.css';
 
-const RegistrationEmail = (props) => {
-	const { errors } = props;
+const RegistrationEmail = ({ errors, ...props }) => {
 	return (
 		<div className='registration__item-wrapper'>
 			<div className='registration__item'>
@@ -18,11 +17,7 @@ const RegistrationEmail = (props) => {
 					placeholder='Enter email'
 				/>
 			</div>
-			<div className='registration__error'>
-				{errors?.email?.message || (
-					<div style={{ visibility: 'hidden' }}>err</div>
-				)}
-			</div>
+			<div className='registration__error'>{errors?.email?.message}</div>
 		</div>
 	);
 };
