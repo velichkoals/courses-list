@@ -1,20 +1,19 @@
 import React from 'react';
 import { Header } from '../Header/Header';
-import { Link, useLocation } from 'react-router-dom';
-import { IoIosArrowBack } from 'react-icons/io';
+import { Link, useParams } from 'react-router-dom';
 import { IconContext } from 'react-icons';
+import { IoIosArrowBack } from 'react-icons/io';
+import { minToHours } from '../../heplers/minToHours';
+import { convertDate } from '../../heplers/convertDate';
+import { getCourseAuthors } from '../../heplers/getCourseAuthors';
 
 import './CourseInfo.css';
 
-export const CourseInfo = () => {
-	const location = useLocation();
+export const CourseInfo = ({ courses, authors }) => {
+	const params = useParams();
+	const courseId = params.courseId;
 
-	const authors = location.state.authorsList;
-	const title = location.state.info.title;
-	const id = location.state.info.id;
-	const description = location.state.info.description;
-	const duration = `${location.state.duration} hours`;
-	const date = location.state.correctDate;
+	const course = courses.filter((elem) => elem.id === courseId);
 
 	return (
 		<div className='course-info'>
@@ -26,27 +25,27 @@ export const CourseInfo = () => {
 					</IconContext.Provider>
 					Back to courses
 				</Link>
-				<div className='info__title'>{title}</div>
+				<div className='info__title'>{course[0].title}</div>
 				<div className='info-section__wrapper'>
-					<div className='info__description'>{description}</div>
+					<div className='info__description'>{course[0].description}</div>
 					<div className='info__details'>
 						<div className='info__details__item'>
 							{' '}
 							<span className='info__details__title'>ID:</span>
-							{id}
+							{course[0].id}
 						</div>
 						<div className='info__details__item'>
 							{' '}
 							<span className='info__details__title'>Duration:</span>
-							{duration}
+							{minToHours(course[0].duration)}
 						</div>
 						<div className='info__details__item'>
 							<span className='info__details__title'>Created:</span>
-							{date}
+							{convertDate(course[0].creationDate)}
 						</div>
 						<div className='info__details__item'>
 							<span className='info__details__title'>Authors:</span>{' '}
-							<div>{authors}</div>
+							<div>{getCourseAuthors(course[0].authors, authors)}</div>
 						</div>
 					</div>
 				</div>

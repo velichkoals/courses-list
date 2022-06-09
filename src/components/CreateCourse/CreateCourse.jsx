@@ -12,7 +12,7 @@ import { AuthorsList } from './components/AuthorsList/AuthorsList';
 
 import './CreateCourse.css';
 
-export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
+export const CreateCourse = ({ authors, setAuthors, courses, setCourses }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState(0);
@@ -56,7 +56,7 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 		) {
 			const authorsList = newAuthors.map((elem) => elem.id);
 
-			const course = {
+			const newCourse = {
 				id: uuidv4(),
 				title,
 				description,
@@ -64,7 +64,9 @@ export const CreateCourse = ({ addNewCourse, authors, setAuthors }) => {
 				duration,
 				authors: authorsList,
 			};
-			addNewCourse(course, newAuthors);
+
+			setCourses([...courses, newCourse]);
+			setAuthors([...authors, ...newAuthors]);
 
 			setTitle('');
 			setDescription('');

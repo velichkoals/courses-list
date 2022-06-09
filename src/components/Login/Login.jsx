@@ -82,12 +82,10 @@ export const Login = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				{isCorrectData ? (
+				{isCorrectData && (
 					<div className='login__error login__error__email'>
 						Couldn't find your account.
 					</div>
-				) : (
-					<div style={{ display: 'none' }}>err</div>
 				)}
 				<Button text={loginBtn} />
 				<div className='login-link'>

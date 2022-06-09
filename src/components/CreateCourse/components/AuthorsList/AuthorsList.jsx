@@ -1,19 +1,23 @@
 import React from 'react';
 import { Button } from '../../../../common/Button/Button';
 
-export const AuthorsList = (props) => {
-	const { authors, addAuthor, newAuthors, removeAuthor } = props;
+export const AuthorsList = ({
+	authors,
+	addAuthor,
+	newAuthors,
+	removeAuthor,
+}) => {
 	const deleteAuthor = 'Delete author';
 	return (
 		<div className='create__column'>
 			<div className='create__item create__item-authors'>
 				<div className='item__title'>Authors</div>
 				<div className='authors-list'>
-					{authors.map((elem, index) => (
-						<div key={index} className='authors-list__item'>
-							<div className='authors-list__name'>{elem.name}</div>
+					{authors.map((author) => (
+						<div key={author.id} className='authors-list__item'>
+							<div className='authors-list__name'>{author.name}</div>
 							<Button
-								onClick={() => addAuthor(elem)}
+								onClick={() => addAuthor(author)}
 								type='button'
 								text='Add author'
 							/>
@@ -25,11 +29,11 @@ export const AuthorsList = (props) => {
 					{newAuthors.length === 0 ? (
 						<div>Authors list is empty</div>
 					) : (
-						newAuthors.map((elem, index) => (
-							<div key={index} className='authors-list__item'>
-								<div className='authors-list__name'>{elem.name}</div>
+						newAuthors.map((newAuthor) => (
+							<div key={newAuthor.id} className='authors-list__item'>
+								<div className='authors-list__name'>{newAuthor.name}</div>
 								<Button
-									onClick={() => removeAuthor(elem)}
+									onClick={() => removeAuthor(newAuthor)}
 									type='button'
 									text={deleteAuthor}
 								/>

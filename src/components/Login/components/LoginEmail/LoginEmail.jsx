@@ -3,8 +3,7 @@ import { FormInput } from '../../../../common/FormInput/FormInput';
 
 import '../../Login.css';
 
-const LoginEmail = (props) => {
-	const { errors } = props;
+const LoginEmail = ({ errors, ...props }) => {
 	return (
 		<div className='login__item-wrapper'>
 			<div className='login__item'>
@@ -18,11 +17,7 @@ const LoginEmail = (props) => {
 					placeholder='Enter email'
 				/>
 			</div>
-			<div className='login__error'>
-				{errors?.email?.message || (
-					<div style={{ visibility: 'hidden' }}>err</div>
-				)}
-			</div>
+			<div className='login__error'>{errors?.email?.message}</div>
 		</div>
 	);
 };
