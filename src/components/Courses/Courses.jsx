@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCourseAction } from '../../store/courses/actionCreators';
-import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../../store/user/actionCreators';
+import { getAuthors, getCourses } from '../../store/selectors';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { CreateCourse } from '../CourseForm/CourseForm';
-import { getCourses } from '../../store/selectors';
-import { loginUser } from '../../store/user/actionCreators';
 
 import './Courses.css';
 
-export const Courses = ({ add, searchResults, setSearchResults }) => {
+export const Courses = () => {
 	const navigate = useNavigate();
-	const [addCourse, setAddCourse] = useState(false);
-
 	const dispatch = useDispatch();
 	const courses = useSelector(getCourses);
+	const authors = useSelector(getAuthors);
+	const [searchResults, setSearchResults] = useState(courses);
 
 	useEffect(() => {
 		if (!localStorage.getItem('token')) {
@@ -29,66 +27,48 @@ export const Courses = ({ add, searchResults, setSearchResults }) => {
 			token: localStorage.getItem('token'),
 		};
 		dispatch(loginUser(userInfo));
-	});
+	}, []);
 
 	useEffect(() => {
 		setSearchResults([...courses]);
 	}, [courses]);
 
-	useEffect(() => {
-		if (add === false) {
-			setAddCourse(false);
-		}
-	}, [add]);
-
-	const handleClick = () => {
-		navigate('add');
-		setAddCourse(true);
-	};
-
 	const handleSearch = (searchQuery) => {
-		let res = [];
-		courses.map((elem) => {
-			if (
-				elem.title.toUpperCase().includes(searchQuery.toUpperCase()) ||
-				searchQuery.toUpperCase() === elem.id.toUpperCase()
-			) {
-				res.push(elem);
-			}
-			return courses;
-		});
-		setSearchResults(res);
+		const res = courses.filter(
+			(course) =>
+				course.title.toUpperCase().includes(searchQuery.toUpperCase()) ||
+				searchQuery.toUpperCase() === course.id.toUpperCase()
+		);
+		setSearchResults([...res]);
 	};
 
 	const handleClear = () => {
 		setSearchResults([...courses]);
 	};
 
-	const addNewCourse = (info) => {
-		dispatch(addCourseAction(info));
-		setAddCourse(false);
-	};
-
 	const buttonText = 'Add new course';
 	return (
 		<div className='courses'>
-			{addCourse ? (
-				<div className='courses-add'>
-					<CreateCourse addNewCourse={addNewCourse} />
+			<div>
+				<div className='courses-section'>
+					<SearchBar handleSearch={handleSearch} handleClear={handleClear} />
+					<Link to='add'>
+						<Button text={buttonText} />
+					</Link>
 				</div>
-			) : (
-				<div>
-					<div className='courses-section'>
-						<SearchBar handleSearch={handleSearch} handleClear={handleClear} />
-						<Button onClick={handleClick} text={buttonText} />
-					</div>
-					<div className='courses-list'>
-						{searchResults.map((elem, index) => {
-							return <CourseCard info={elem} key={index} id={index + 1} />;
-						})}
-					</div>
+				<div className='courses-list'>
+					{searchResults.map((course) => {
+						return (
+							<CourseCard
+								info={course}
+								authors={authors}
+								key={course.id}
+								id={course.id}
+							/>
+						);
+					})}
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };

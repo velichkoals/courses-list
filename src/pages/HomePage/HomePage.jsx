@@ -4,12 +4,12 @@ import { Courses } from '../../components/Courses/Courses';
 
 import './HomePage.css';
 
-export const HomePage = (props) => {
+export const HomePage = () => {
 	return (
 		<div className='App'>
 			<Header />
 			<section className='main'>
-				<Courses {...props} />
+				<Courses />
 			</section>
 		</div>
 	);

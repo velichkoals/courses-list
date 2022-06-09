@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { createAuthorAction } from '../../store/authors/actionCreators';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAuthors } from '../../store/selectors';
 import { Button } from '../../common/Button/Button';
 import { minToHours } from '../../heplers/minToHours';
 import { correctDate } from '../../heplers/correctDate';
@@ -11,14 +11,15 @@ import { CreateCourseDescription } from './components/CourseFormDescription/Crea
 import { CreateCourseDuration } from './components/CourseFormDuration/CreateCourseDuration';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AuthorsList } from './components/AuthorsList/AuthorsList';
-import { getAuthors } from '../../store/selectors';
+import { addCourseAction } from '../../store/courses/actionCreators';
+import { createAuthorAction } from '../../store/authors/actionCreators';
 
 import './CourseForm.css';
 
-export const CreateCourse = ({ addNewCourse }) => {
-	const authors = useSelector(getAuthors);
-	const dispatch = useDispatch();
+export const CourseForm = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const authors = useSelector(getAuthors);
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -67,7 +68,7 @@ export const CreateCourse = ({ addNewCourse }) => {
 		) {
 			const authorsList = courseAuthors.map((elem) => elem.id);
 
-			const course = {
+			const newCourse = {
 				id: uuidv4(),
 				title,
 				description,
@@ -75,7 +76,8 @@ export const CreateCourse = ({ addNewCourse }) => {
 				duration,
 				authors: authorsList,
 			};
-			addNewCourse(course, courseAuthors);
+
+			dispatch(addCourseAction(newCourse));
 
 			setTitle('');
 			setDescription('');
@@ -116,8 +118,8 @@ export const CreateCourse = ({ addNewCourse }) => {
 				id: uuidv4(),
 				name: authorName,
 			};
-			dispatch(createAuthorAction(newAuthor));
 			setCourseAuthors([]);
+			dispatch(createAuthorAction(newAuthor));
 			setAuthorName('');
 		} else {
 			alert('Author name should be at least 2 characters!');
@@ -177,9 +179,9 @@ export const CreateCourse = ({ addNewCourse }) => {
 					</div>
 				</div>
 				<AuthorsList
-					addAuthor={addAuthor}
-					courseAuthors={courseAuthors}
 					authorsList={authorsList}
+					courseAuthors={courseAuthors}
+					addAuthor={addAuthor}
 					removeAuthor={removeAuthor}
 				/>
 			</div>

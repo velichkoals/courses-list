@@ -4,8 +4,7 @@ import { Input } from '../../../../common/Input/Input';
 
 import './Searchbar.css';
 
-export const SearchBar = (props) => {
-	const { handleSearch, handleClear } = props;
+export const SearchBar = ({ handleSearch, handleClear }) => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const handleChange = (e) => {
