@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../store/user/actionCreators';
+import { useSelector } from 'react-redux';
 import { getAuthors, getCourses } from '../../store/selectors';
 import { CourseCard } from './components/CourseCard/CourseCard';
 import { SearchBar } from './components/SearchBar/SearchBar';
@@ -11,7 +10,6 @@ import './Courses.css';
 
 export const Courses = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const courses = useSelector(getCourses);
 	const authors = useSelector(getAuthors);
 	const [searchResults, setSearchResults] = useState(courses);
@@ -20,13 +18,6 @@ export const Courses = () => {
 		if (!localStorage.getItem('token')) {
 			navigate('/login');
 		}
-
-		const userInfo = {
-			name: localStorage.getItem('username'),
-			email: localStorage.getItem('email'),
-			token: localStorage.getItem('token'),
-		};
-		dispatch(loginUser(userInfo));
 	}, []);
 
 	useEffect(() => {

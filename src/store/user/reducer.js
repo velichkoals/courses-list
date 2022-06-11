@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from './actionTypes';
+import { LOGIN_USER, LOGOUT_USER, GET_USER } from './actionTypes';
 
 const defaultState = {
 	user: {
@@ -12,6 +12,18 @@ const defaultState = {
 
 export const userReducer = (state = defaultState, action) => {
 	switch (action.type) {
+		case GET_USER:
+			return {
+				...state,
+				user: {
+					isAuth: true,
+					name: action.payload.name,
+					token: localStorage.getItem('token'),
+					email: action.payload.email,
+					role: action.payload.role,
+				},
+			};
+
 		case LOGIN_USER:
 			return {
 				...state,
@@ -29,10 +41,10 @@ export const userReducer = (state = defaultState, action) => {
 				...state,
 				user: {
 					isAuth: false,
-					name: action.payload.name,
-					token: action.payload.token,
-					email: action.payload.email,
-					role: action.payload.role,
+					name: action.payload,
+					token: action.payload,
+					email: action.payload,
+					role: action.payload,
 				},
 			};
 

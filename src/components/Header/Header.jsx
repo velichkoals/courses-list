@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../store/selectors';
-import { logoutUser } from '../../store/user/actionCreators';
+import { deleteUser, getUserInfo } from '../../store/user/thunk';
 import { Logo } from './components/Logo/Logo';
 import { Button } from '../../common/Button/Button';
 
@@ -12,29 +12,21 @@ export const Header = () => {
 	const [isDisabled, setIsDisabled] = useState(true);
 	const navigate = useNavigate();
 	const location = useLocation();
-	const user = useSelector(getUser);
 	const dispatch = useDispatch();
+	const user = useSelector(getUser);
 
 	useEffect(() => {
 		if (location.pathname === '/courses/add') {
 			setIsDisabled(false);
 		}
-	});
+		dispatch(getUserInfo());
+	}, []);
 
-	const removeUser = () => {
-		localStorage.removeItem('token');
-		localStorage.removeItem('username');
+	async function removeUser() {
 		navigate('/login');
-
-		const userInfo = {
-			name: '',
-			token: '',
-			email: '',
-			role: '',
-		};
-
-		dispatch(logoutUser(userInfo));
-	};
+		dispatch(deleteUser());
+		localStorage.removeItem('token');
+	}
 
 	const buttonText = 'Logout';
 	return (

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../common/Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { postData } from '../../heplers/postData';
 import LoginEmail from './components/LoginEmail/LoginEmail';
 import LoginPass from './components/LoginPass/LoginPass';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../store/user/actionCreators';
+import { loginUser } from '../../store/user/thunk';
 
 import './Login.css';
 
@@ -34,35 +33,18 @@ export const Login = () => {
 	async function onSubmit() {
 		reset();
 
-		let userRole = '';
 		const newUser = {
 			email,
 			password,
 		};
-		const loginInfo = await postData('/login', newUser);
 
-		if (email.trim() === 'admin@email.com' && password.trim() === 'admin123') {
-			userRole = 'ADMIN';
-		}
+		await dispatch(loginUser(newUser));
 
-		if (loginInfo.successful) {
+		if (localStorage.getItem('token')) {
 			navigate('/courses');
 			setIsCorrectData(false);
-			localStorage.setItem('token', loginInfo.result);
-			localStorage.setItem('username', loginInfo.user.name);
-			localStorage.setItem('email', loginInfo.user.email);
-			localStorage.setItem('role', userRole);
-
-			const userInfo = {
-				name: loginInfo.user.name,
-				token: loginInfo.result,
-				email: loginInfo.user.email,
-				role: userRole,
-			};
-
-			dispatch(loginUser(userInfo));
 		}
-		if (loginInfo.successful === false && Object.keys(errors).length === 0) {
+		if (!localStorage.getItem('token')) {
 			setIsCorrectData(true);
 		}
 	}
