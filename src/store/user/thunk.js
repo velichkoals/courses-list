@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { getConfig } from '../services';
+import { getConfig, URL } from '../services';
 import {
 	getUserAction,
 	loginUserAction,
 	logoutUserAction,
 } from './actionCreators';
 
-const URL = 'http://localhost:4000';
-
 export const loginUser = (userInfo) => {
-	return (dispatch) => {
-		return axios
+	return async (dispatch) => {
+		return await axios
 			.post(`${URL}/login`, userInfo, getConfig())
 			.then((response) => {
 				let userRole;
@@ -30,8 +28,9 @@ export const loginUser = (userInfo) => {
 				};
 				dispatch(loginUserAction(user));
 				localStorage.setItem('token', response.data.result);
+				localStorage.setItem('role', userRole);
 			})
-			.catch((response) => response.data);
+			.catch((response) => console.log(response));
 	};
 };
 

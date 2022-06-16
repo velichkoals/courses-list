@@ -1,1 +1,2 @@
 export const CREATE_AUTHOR = 'CREATE_AUTHOR';
+export const GET_ALL_AUTHORS = 'GET_ALL_AUTHORS';

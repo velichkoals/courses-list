@@ -7,7 +7,7 @@ const defaultState = {
 export const coursesReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case ADD_ALL_COURSES:
-			return { ...state, courses: [...state.courses, ...action.payload] };
+			return { ...state, courses: [...action.payload] };
 		case ADD_COURSE:
 			return { ...state, courses: [...state.courses, action.payload] };
 

@@ -10,6 +10,7 @@ import { convertDate } from '../../heplers/convertDate';
 import { getCourseAuthors } from '../../heplers/getCourseAuthors';
 
 import './CourseInfo.css';
+
 export const CourseInfo = () => {
 	const params = useParams();
 	const courses = useSelector(getCourses);

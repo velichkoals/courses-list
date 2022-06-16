@@ -5,9 +5,9 @@ export const AuthorsList = ({
 	authorsList,
 	addAuthor,
 	courseAuthors,
-	removeAuthor,
+	deleteAuthor,
 }) => {
-	const deleteAuthor = 'Delete author';
+	const buttonText = 'Delete author';
 	return (
 		<div className='create__column'>
 			<div className='create__item create__item-authors'>
@@ -33,9 +33,9 @@ export const AuthorsList = ({
 							<div key={newAuthor.id} className='authors-list__item'>
 								<div className='authors-list__name'>{newAuthor.name}</div>
 								<Button
-									onClick={() => removeAuthor(newAuthor)}
+									onClick={() => deleteAuthor(newAuthor)}
 									type='button'
-									text={deleteAuthor}
+									text={buttonText}
 								/>
 							</div>
 						))

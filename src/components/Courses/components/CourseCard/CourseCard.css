@@ -47,6 +47,9 @@
     align-items: center;
     justify-content: center;
 }
+.card__item__buttons {
+    display: flex;
+}
 
 .edit-btn, .delete-btn {
     align-items: center;

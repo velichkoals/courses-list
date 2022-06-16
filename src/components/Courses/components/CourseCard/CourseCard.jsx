@@ -1,19 +1,20 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Button } from '../../../../common/Button/Button';
 import { minToHours } from '../../../../heplers/minToHours';
 import { convertDate } from '../../../../heplers/convertDate';
+import { removeCourse } from '../../../../store/courses/thunk';
 import { getCourseAuthors } from '../../../../heplers/getCourseAuthors';
 import { EditIcon } from './EditIcon/EditIcon';
 import { DeleteIcon } from './DeleteIcon/DeleteIcon';
-import { removeCourseAction } from '../../../../store/courses/actionCreators';
-import { useDispatch } from 'react-redux';
 
 import './CourseCard.css';
 
 export const CourseCard = ({ info, authors, ...props }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const userRole = localStorage.getItem('role');
 
 	const correctDate = useMemo(
 		() => convertDate(info.creationDate),
@@ -28,9 +29,12 @@ export const CourseCard = ({ info, authors, ...props }) => {
 	const showCourse = () => {
 		navigate(`${props.id}`);
 	};
+	const editCourse = () => {
+		navigate(`update/${props.id}`);
+	};
 
-	const removeCourse = () => {
-		dispatch(removeCourseAction(info.id));
+	const deleteCourse = () => {
+		dispatch(removeCourse(info.id));
 	};
 
 	const buttonText = 'Show course';
@@ -55,12 +59,16 @@ export const CourseCard = ({ info, authors, ...props }) => {
 				</div>
 				<div className='card__column__item card-buttons'>
 					<Button text={buttonText} onClick={showCourse} />
-					<button className='edit-btn'>
-						<EditIcon />
-					</button>
-					<button className='delete-btn' onClick={removeCourse}>
-						<DeleteIcon />
-					</button>
+					{userRole === 'admin' ? (
+						<div className='card__item__buttons'>
+							<button className='edit-btn' onClick={editCourse}>
+								<EditIcon />
+							</button>
+							<button className='delete-btn' onClick={deleteCourse}>
+								<DeleteIcon />
+							</button>
+						</div>
+					) : null}
 				</div>
 			</div>
 		</div>

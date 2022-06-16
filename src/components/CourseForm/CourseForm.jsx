@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAuthors } from '../../store/selectors';
+import { getAuthors, getCourses } from '../../store/selectors';
 import { Button } from '../../common/Button/Button';
 import { minToHours } from '../../heplers/minToHours';
-import { correctDate } from '../../heplers/correctDate';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateCourseTitle } from './components/CourseFormTitle/CreateCourseTitle';
 import { CreateCourseDescription } from './components/CourseFormDescription/CreateCourseDescription';
 import { CreateCourseDuration } from './components/CourseFormDuration/CreateCourseDuration';
 import { AddAuthor } from './components/AddAuthor/AddAuthor';
 import { AuthorsList } from './components/AuthorsList/AuthorsList';
-import { addCourseAction } from '../../store/courses/actionCreators';
-import { createAuthorAction } from '../../store/authors/actionCreators';
+import { addCourse, updateCourse } from '../../store/courses/thunk';
+import { createAuthor, getAllAuthors } from '../../store/authors/thunk';
 
 import './CourseForm.css';
 
@@ -27,10 +25,60 @@ export const CourseForm = () => {
 	const [authorName, setAuthorName] = useState('');
 	const [authorsList, setAuthorsList] = useState([...authors]);
 	const [courseAuthors, setCourseAuthors] = useState([]);
+	const [buttonText, setButtonText] = useState('');
+
+	const params = useParams();
+	const courses = useSelector(getCourses);
+	const courseId = params.courseId;
+	const course = courses.filter((elem) => elem.id === courseId);
 
 	useEffect(() => {
-		setAuthorsList([...authors]);
+		if (course.length > 0) {
+			setButtonText('Update Course');
+			setTitle(course[0].title);
+			setDescription(course[0].description);
+			setDuration(course[0].duration);
+
+			const courseAuthorsList = [];
+
+			authorsList.map((author) => {
+				course[0].authors.map((authorId) => {
+					if (authorId === author.id) {
+						courseAuthorsList.push(author);
+					}
+					return courseAuthorsList;
+				});
+				return authorsList;
+			});
+			setCourseAuthors([...courseAuthors, ...courseAuthorsList]);
+		} else {
+			setButtonText('Create Course');
+		}
+	}, []);
+
+	useEffect(() => {
+		let updatedAuthorsList = [...authorsList];
+		if (courseAuthors.length > 0) {
+			authorsList.map((author) => {
+				courseAuthors.map((a) => {
+					if (a.id === author.id) {
+						updatedAuthorsList = updatedAuthorsList.filter(
+							(author) => author.id !== a.id
+						);
+					}
+					return courseAuthors;
+				});
+				return authorsList;
+			});
+			setAuthorsList([...updatedAuthorsList]);
+		} else {
+			setAuthorsList([...authors]);
+		}
 	}, [authors]);
+
+	useEffect(() => {
+		dispatch(getAllAuthors());
+	}, []);
 
 	const validateForm = (e) => {
 		e.preventDefault();
@@ -67,23 +115,24 @@ export const CourseForm = () => {
 			isValidAuthors
 		) {
 			const authorsList = courseAuthors.map((elem) => elem.id);
-
 			const newCourse = {
-				id: uuidv4(),
 				title,
 				description,
-				creationDate: correctDate(),
 				duration,
 				authors: authorsList,
 			};
-
-			dispatch(addCourseAction(newCourse));
+			if (buttonText === 'Create Course') {
+				dispatch(addCourse(newCourse));
+			} else if (buttonText === 'Update Course') {
+				dispatch(updateCourse(courseId, newCourse));
+			}
 
 			setTitle('');
 			setDescription('');
 			setDuration(0);
 			setAuthorName('');
 			setCourseAuthors([]);
+			setAuthorsList([...authors]);
 			navigate('/courses');
 		} else {
 			alert('Please, fill in all fields');
@@ -101,7 +150,7 @@ export const CourseForm = () => {
 		});
 	};
 
-	const removeAuthor = (data) => {
+	const deleteAuthor = (data) => {
 		courseAuthors.map((elem) => {
 			if (elem === data) {
 				setAuthorsList([...authorsList, elem]);
@@ -115,18 +164,16 @@ export const CourseForm = () => {
 	const addAuthorToList = () => {
 		if (authorName.trim().length >= 2) {
 			const newAuthor = {
-				id: uuidv4(),
 				name: authorName,
 			};
 			setCourseAuthors([]);
-			dispatch(createAuthorAction(newAuthor));
+			dispatch(createAuthor(newAuthor));
 			setAuthorName('');
 		} else {
 			alert('Author name should be at least 2 characters!');
 		}
 	};
 
-	const buttonCreate = 'Create Course';
 	const buttonCreateAuthor = 'Create author';
 
 	return (
@@ -138,7 +185,7 @@ export const CourseForm = () => {
 						onChange={(e) => setTitle(e.target.value)}
 					/>
 					<div className='create__btn'>
-						<Button type='submit' text={buttonCreate} />
+						<Button type='submit' text={buttonText} />
 					</div>
 				</div>
 				<CreateCourseDescription
@@ -182,7 +229,7 @@ export const CourseForm = () => {
 					authorsList={authorsList}
 					courseAuthors={courseAuthors}
 					addAuthor={addAuthor}
-					removeAuthor={removeAuthor}
+					deleteAuthor={deleteAuthor}
 				/>
 			</div>
 		</form>

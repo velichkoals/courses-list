@@ -26,6 +26,7 @@ export const Header = () => {
 		navigate('/login');
 		dispatch(deleteUser());
 		localStorage.removeItem('token');
+		localStorage.removeItem('role');
 	}
 
 	const buttonText = 'Logout';
