@@ -1,22 +1,12 @@
-import { ADD_COURSE, REMOVE_COURSE } from './actionTypes';
-import { fetchData } from '../../heplers/fetchData';
+import { ADD_COURSE, REMOVE_COURSE, ADD_ALL_COURSES } from './actionTypes';
 
 const defaultState = [];
 
-export async function getAllCourses() {
-	const coursesList = await fetchData('GET', '/courses/all');
-	if (coursesList.successful) {
-		coursesList.result.map((course) => {
-			defaultState.push(course);
-			return coursesList;
-		});
-	}
-	return defaultState;
-}
-getAllCourses().then((r) => r);
-
 export const coursesReducer = (state = defaultState, action) => {
 	switch (action.type) {
+		case ADD_ALL_COURSES:
+			return [...action.payload];
+
 		case ADD_COURSE:
 			return [...state, action.payload];
 

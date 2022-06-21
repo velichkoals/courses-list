@@ -8,6 +8,9 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 
 import './Courses.css';
+import { getAllAuthors, getAllCourses } from '../../store/services';
+import { addAllCoursesAction } from '../../store/courses/actionCreators';
+import { addAllAuthors } from '../../store/authors/actionCreators';
 
 export const Courses = () => {
 	const navigate = useNavigate();
@@ -27,6 +30,17 @@ export const Courses = () => {
 			token: localStorage.getItem('token'),
 		};
 		dispatch(loginUser(userInfo));
+
+		getAllCourses().then((response) => {
+			if (response.successful) {
+				dispatch(addAllCoursesAction(response.result));
+			}
+		});
+		getAllAuthors().then((response) => {
+			if (response.successful) {
+				dispatch(addAllAuthors(response.result));
+			}
+		});
 	}, []);
 
 	useEffect(() => {
