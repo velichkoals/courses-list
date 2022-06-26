@@ -1,11 +1,12 @@
 import { ADD_COURSE, REMOVE_COURSE, ADD_ALL_COURSES } from './actionTypes';
 
-const defaultState = [];
+export const defaultState = [];
 
 export const coursesReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case ADD_ALL_COURSES:
 			return [...action.payload];
+
 		case ADD_COURSE:
 			return [...state, action.payload];
 

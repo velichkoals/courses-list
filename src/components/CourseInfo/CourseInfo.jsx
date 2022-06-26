@@ -21,7 +21,7 @@ export const CourseInfo = () => {
 	return (
 		<div className='course-info'>
 			<Header />
-			<div className='info-wrapper'>
+			<div className='info-wrapper' data-testid='course-info'>
 				<Link to='/courses' className='courses-link'>
 					<IconContext.Provider value={{ className: 'arrow-back' }}>
 						<IoIosArrowBack />

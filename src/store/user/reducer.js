@@ -1,6 +1,6 @@
 import { LOGIN_USER, LOGOUT_USER, GET_USER } from './actionTypes';
 
-const defaultState = {
+export const defaultState = {
 	isAuth: false,
 	name: '',
 	email: '',

@@ -14,7 +14,11 @@ export const AuthorsList = ({
 				<div className='item__title'>Authors</div>
 				<div className='authors-list'>
 					{authorsList.map((author) => (
-						<div key={author.id} className='authors-list__item'>
+						<div
+							key={author.id}
+							className='authors-list__item'
+							data-testid='author'
+						>
 							<div className='authors-list__name'>{author.name}</div>
 							<Button
 								onClick={() => addAuthor(author)}

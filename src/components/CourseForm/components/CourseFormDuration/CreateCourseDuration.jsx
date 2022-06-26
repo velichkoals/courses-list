@@ -14,6 +14,7 @@ export const CreateCourseDuration = (props) => {
 					type='number'
 					id='duration'
 					placeholder='Enter duration in minutes'
+					data-testid='duration-input'
 				/>
 			</div>
 		</div>

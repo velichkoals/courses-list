@@ -39,32 +39,53 @@ export const CourseCard = ({ info, authors, ...props }) => {
 
 	const buttonText = 'Show course';
 	return (
-		<div className='course-card'>
+		<div className='course-card' data-testid='courseCard'>
 			<div className='card__column card__column_first'>
-				<div className='card-title'>{info.title}</div>
-				<div className='card-description'>{info.description}</div>
+				<div className='card-title' data-testid='card-title'>
+					{info.title}
+				</div>
+				<div className='card-description' data-testid='card-description'>
+					{info.description}
+				</div>
 			</div>
 			<div className='card__column card__column_second'>
-				<div className='card__column__item card-duration'>
+				<div
+					className='card__column__item card-duration'
+					data-testid='card-duration'
+				>
 					<span className='card-property__title'>Duration:</span>
 					{duration} hours
 				</div>
-				<div className='card__column__item card-authors'>
+				<div
+					className='card__column__item card-authors'
+					data-testid='card-authors'
+				>
 					<span className='card-property__title'>Authors:</span>
 					{courseAuthors}
 				</div>
-				<div className='card__column__item card-creationDate'>
+				<div
+					className='card__column__item card-creationDate'
+					data-testid='card-creationDate'
+				>
 					<span className='card-property__title'>Created:</span>
 					{correctDate}
 				</div>
 				<div className='card__column__item card-buttons'>
-					<Button text={buttonText} onClick={showCourse} />
+					<Button
+						text={buttonText}
+						data-testid='show-course'
+						onClick={showCourse}
+					/>
 					{userRole === 'admin' ? (
 						<div className='card__item__buttons'>
 							<button className='edit-btn' onClick={editCourse}>
 								<EditIcon />
 							</button>
-							<button className='delete-btn' onClick={deleteCourse}>
+							<button
+								className='delete-btn'
+								onClick={deleteCourse}
+								data-testid='delete-icon'
+							>
 								<DeleteIcon />
 							</button>
 						</div>

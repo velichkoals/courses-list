@@ -49,7 +49,11 @@ export const Courses = () => {
 						to='add'
 						className={userRole !== 'admin' ? 'link_disabled' : null}
 					>
-						<Button text={buttonText} disabled={userRole !== 'admin'} />
+						<Button
+							text={buttonText}
+							data-testid='add-course-btn'
+							disabled={userRole !== 'admin'}
+						/>
 					</Link>
 				</div>
 				<div className='courses-list'>

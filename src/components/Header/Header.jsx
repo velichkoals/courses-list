@@ -33,7 +33,7 @@ export const Header = () => {
 	return (
 		<div className='header'>
 			<div className='header-item'>
-				<Link to={isDisabled ? '/courses' : '#'}>
+				<Link to={isDisabled ? '/courses' : '#'} data-testid='react-icon'>
 					<Logo />
 				</Link>
 			</div>

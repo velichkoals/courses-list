@@ -21,14 +21,14 @@ export const SearchBar = ({ handleSearch, handleClear }) => {
 
 	const buttonText = 'Search';
 	return (
-		<form onSubmit={onSubmit} className='searchBar'>
+		<form onSubmit={onSubmit} className='searchBar' data-testid='searchBar'>
 			<Input
 				value={searchValue}
 				onChange={handleChange}
 				placeholder='Enter course name'
 			/>
 			<div className='searchbar__btn'>
-				<Button type='submit' text={buttonText} />
+				<Button type='submit' text={buttonText} data-testid='search-btn' />
 			</div>
 		</form>
 	);

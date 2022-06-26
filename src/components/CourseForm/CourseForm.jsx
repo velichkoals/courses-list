@@ -177,7 +177,11 @@ export const CourseForm = () => {
 	const buttonCreateAuthor = 'Create author';
 
 	return (
-		<form onSubmit={validateForm} className='create-course'>
+		<form
+			onSubmit={validateForm}
+			className='create-course'
+			data-testid='course-form'
+		>
 			<div className='create__section-wrapper'>
 				<div className='create__section'>
 					<CreateCourseTitle
@@ -185,7 +189,11 @@ export const CourseForm = () => {
 						onChange={(e) => setTitle(e.target.value)}
 					/>
 					<div className='create__btn'>
-						<Button type='submit' text={buttonText} />
+						<Button
+							type='submit'
+							text={buttonText}
+							data-testid='create-course-btn'
+						/>
 					</div>
 				</div>
 				<CreateCourseDescription
@@ -206,6 +214,7 @@ export const CourseForm = () => {
 								onClick={addAuthorToList}
 								type='button'
 								text={buttonCreateAuthor}
+								data-testid='create-author-btn'
 							/>
 						</div>
 					</div>
