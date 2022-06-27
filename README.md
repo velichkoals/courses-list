@@ -2,23 +2,22 @@
 
 Link to deployment - 
 
-<h2>Stack:</h2>
+<h3>Stack:</h3>
 - React - https://reactjs.org/
 - Redux, redux-devtools-extension - https://redux.js.org/
 
-
-Used libs: 
+<h3>Used libs:</h3>
 - react-router/react-router-dom
 - react-hook-form
 - react-icons
 - axios
 
 
-Tests:
+<h3>Tests:</h3>
 - react-testing-library
 - jest
 
 
-Linters: 
+<h3>Linters:</h3>
 - prettier
 - eslint
