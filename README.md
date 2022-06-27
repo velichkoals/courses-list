@@ -2,7 +2,7 @@
 
 Link to deployment - 
 
-Stack:
+<h4>Stack:</h4>
 - React - https://reactjs.org/
 - Redux, redux-devtools-extension - https://redux.js.org/
 
