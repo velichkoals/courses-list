@@ -1,0 +1,7 @@
+.searchBar {
+    display: flex;
+    margin: 0 2rem;
+}
+.searchbar__btn {
+    margin: -.5rem 0;
+}

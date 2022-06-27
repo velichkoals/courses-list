@@ -1,0 +1,42 @@
+.login {
+    align-items: center;
+    display: flex;
+    height: 600px;
+    flex-direction: column;
+    justify-content: center;
+}
+.login__item-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.login__item {
+    margin: .3rem;
+    width: 300px;
+}
+
+.login__title {
+    color: #706f6f;
+    margin:  0 1rem 1rem 0 ;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.registration-link {
+    color: #4f4f4f;
+    margin: 1rem;
+    font-weight: 500;
+}
+
+.login__error {
+    align-self: flex-end;
+    color: #bd2a2a;
+    margin-right: 1rem;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.login__error__email {
+    align-self: center;
+}
