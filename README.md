@@ -1,7 +1,5 @@
 # Courses List App
 
-Link to deployment - 
-
 <h3>Stack:</h3>
 
 - React - https://reactjs.org/
